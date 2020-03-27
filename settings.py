@@ -1,5 +1,5 @@
 # 集群内部署则设置为True，会自动从/etc目录加载token
-IN_CLUSTER = False
+IN_CLUSTER = True
 # 打印Kubernetse客户端调试日志
 DEBUG = False
 
