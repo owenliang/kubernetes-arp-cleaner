@@ -20,7 +20,7 @@ for pod in w.stream(core_v1.list_pod_for_all_namespaces):
             if traced_pod['ip']:
                 try:
                     cmd = 'arp -d {}'.format(traced_pod['ip'])
-                    print('POD offline：', cmd)
+                    print('POD {} offline：{}'.format(fullname, cmd))
                     os.system(cmd)
                 except:
                     pass
@@ -31,7 +31,7 @@ for pod in w.stream(core_v1.list_pod_for_all_namespaces):
             if pod['status']['pod_ip']:
                 try:
                     cmd = 'arp -d {}'.format(pod['status']['pod_ip'])
-                    print('POD online：', cmd)
+                    print('POD {} online：{}'.format(fullname, cmd))
                     os.system(cmd)
                 except:
                     pass
