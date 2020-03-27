@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: arpclean-k8s
+  namespace: devops
+spec:
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      k8s-app: arpclean-k8s
+  template:
+    metadata:
+      labels:
+        k8s-app: arpclean-k8s
+    spec:
+      containers:
+      - image: kubernetes-arp-cleaner:latest
+        name: arpclean-k8s
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      hostIPC: true
+      hostNetwork: true
+      hostPID: true
+    #  restartPolicy: OnFailure
+    #  securityContext: {}
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: kubernetes-arp-cleaner
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
